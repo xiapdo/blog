@@ -6575,6 +6575,7 @@ h1.post-title {
 
 /* 滚动显示的标题居中 */
 center#name-container {
+  display: none;
   position: absolute !important;
   width: fit-content !important;
   left: 42% !important;
