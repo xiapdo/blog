@@ -1393,7 +1393,7 @@ input::placeholder {
   z-index: -999;
   width: 100%;
   height: 100%;
-  background: var(--default-bg, url(https://img.u7u7.top/blognoteImg/20260604192526136.png));
+  background: var(--default-bg, url(/blog/assets/day_bg.jpg));
   background-attachment: local;
   background-position: center;
   background-size: cover;
@@ -5098,7 +5098,7 @@ mjx-container[display],
   border-radius: 5px !important;
 }
 [data-theme="dark"] #web_bg {
-  background: var(--darkmode-bg, url(https://img.u7u7.top/blogbackground/wallhaven-3lo9v3.webp));
+  background: var(--darkmode-bg, url(/blog/assets/night_bg.jpg));
   background-attachment: local;
   background-position: center;
   background-size: cover;
@@ -5106,14 +5106,14 @@ mjx-container[display],
 }
 @media screen and (max-width: 800px) {
   #web_bg {
-    background: var(--mobileday-bg, url(https://img.u7u7.top/blogbackground/wallhaven-gpgwde.webp));
+    background: var(--mobileday-bg, url(/blog/assets/day_bg.jpg));
     background-attachment: local !important;
     background-position: center !important;
     background-size: cover !important;
     background-repeat: no-repeat !important;
   }
   [data-theme="dark"] #web_bg {
-    background: var(--mobilenight-bg, url(https://img.u7u7.top/blogbackground/wallhaven-7pkv19.webp));
+    background: var(--mobilenight-bg, url(/blog/assets/night_bg.jpg));
     background-attachment: local !important;
     background-position: center !important;
     background-size: cover !important;
@@ -6641,16 +6641,18 @@ center#name-container {
 
 /* 首页文章卡片 */
 #recent-posts > .recent-post-item {
-  background: var(--trans-light);
-  backdrop-filter: var(--backdrop-filter);
+  background: var(--trans-light, rgba(255, 255, 255, 0.92)) !important;
+  backdrop-filter: var(--backdrop-filter, blur(16px)) !important;
+  -webkit-backdrop-filter: var(--backdrop-filter, blur(16px)) !important;
   border-radius: 25px;
   border: var(--border-style);
 }
 
 /* 首页侧栏卡片 */
 #aside-content .card-widget {
-  background: var(--trans-light);
-  backdrop-filter: var(--backdrop-filter);
+  background: var(--trans-light, rgba(255, 255, 255, 0.92)) !important;
+  backdrop-filter: var(--backdrop-filter, blur(16px)) !important;
+  -webkit-backdrop-filter: var(--backdrop-filter, blur(16px)) !important;
   border-radius: 18px;
   border: var(--border-style);
   padding: 20px;
@@ -6660,8 +6662,9 @@ center#name-container {
 div#post,
 div#page,
 div#archive {
-  background: var(--trans-light);
-  backdrop-filter: var(--backdrop-filter);
+  background: var(--trans-light, rgba(255, 255, 255, 0.92)) !important;
+  backdrop-filter: var(--backdrop-filter, blur(16px)) !important;
+  -webkit-backdrop-filter: var(--backdrop-filter, blur(16px)) !important;
   border: var(--border-style);
   border-radius: 20px;
 }
@@ -6682,7 +6685,9 @@ div#archive {
 [data-theme="dark"] div#post,
 [data-theme="dark"] div#archive,
 [data-theme="dark"] div#page {
-  background: var(--trans-dark);
+  background: var(--trans-dark, rgba(25, 25, 25, 0.88)) !important;
+  backdrop-filter: var(--backdrop-filter, blur(16px)) !important;
+  -webkit-backdrop-filter: var(--backdrop-filter, blur(16px)) !important;
 }
 
 /* 白天模式头图与页脚遮罩 */
