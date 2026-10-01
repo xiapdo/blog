@@ -1122,7 +1122,7 @@ function createtime1() {
 
   var ascll = [
     `欢迎来到u7u7🍋の小家!`,
-    `u7 and cc is now 🍭🍭🍭`,
+    `十二 and yyx is now 🍭🍭🍭`,
     `
         
     ██╗   ██╗███████╗██╗   ██╗███████╗  ██████╗ ██████╗
@@ -1329,7 +1329,7 @@ document.addEventListener('visibilitychange', function () {
     clearTimeout(titleTime);
   } else {
     //返回当前页面时标签显示内容
-    document.title = '💀抓到CC啦～';
+    document.title = '💀抓到yyx啦～';
     //两秒后变回正常标题
     titleTime = setTimeout(function () {
       document.title = OriginTitile;
