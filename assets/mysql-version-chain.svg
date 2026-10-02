@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 500" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+    <filter id="shadow2" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.07"/>
+    </filter>
+    <marker id="ptrArrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#0284c7" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="880" height="500" rx="16" fill="url(#bgGrad2)" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="440" y="38" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" fill="#0f172a">InnoDB 隐藏字段与 Undo Log 版本链（Version Chain）模型</text>
+  <text x="440" y="63" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">每行聚簇索引记录通过 DB_ROLL_PTR 单向回溯历史版本，构成 MVCC 的数据基石</text>
+
+  <!-- Section 1: Clustered Index Page Box -->
+  <g transform="translate(40, 85)" filter="url(#shadow2)">
+    <rect width="800" height="95" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <rect x="0" y="0" width="800" height="32" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+    <!-- Tag badge -->
+    <rect x="15" y="6" width="165" height="20" rx="4" fill="#dbeafe"/>
+    <text x="97" y="20" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#1e40af">聚簇索引物理页 (当前最新记录)</text>
+    <text x="730" y="20" text-anchor="end" font-family="system-ui, monospace" font-size="11" fill="#64748b">Location: Buffer Pool / Data File</text>
+
+    <!-- Table Header Columns -->
+    <g transform="translate(20, 42)">
+      <!-- User Columns -->
+      <rect x="0" y="0" width="80" height="42" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+      <text x="40" y="18" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">主键 id</text>
+      <text x="40" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#0f172a">1</text>
+
+      <rect x="90" y="0" width="110" height="42" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+      <text x="145" y="18" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">用户数据 name</text>
+      <text x="145" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#0f172a">"王五"</text>
+
+      <rect x="210" y="0" width="100" height="42" rx="5" fill="#f1f5f9" stroke="#cbd5e1"/>
+      <text x="260" y="18" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">balance</text>
+      <text x="260" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#0f172a">300</text>
+
+      <!-- Hidden Columns (Special Highlighted) -->
+      <rect x="330" y="0" width="130" height="42" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="395" y="17" text-anchor="middle" font-family="system-ui, monospace" font-size="11" font-weight="700" fill="#b45309">DB_ROW_ID</text>
+      <text x="395" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#78350f">隐藏自增ID (1)</text>
+
+      <rect x="470" y="0" width="135" height="42" rx="5" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
+      <text x="537" y="17" text-anchor="middle" font-family="system-ui, monospace" font-size="11" font-weight="700" fill="#b91c1c">DB_TRX_ID</text>
+      <text x="537" y="34" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#991b1b">30 (修改该行的事务)</text>
+
+      <rect x="615" y="0" width="145" height="42" rx="5" fill="#e0f2fe" stroke="#0ea5e9" stroke-width="2"/>
+      <text x="687" y="17" text-anchor="middle" font-family="system-ui, monospace" font-size="11" font-weight="700" fill="#0369a1">DB_ROLL_PTR</text>
+      <text x="687" y="34" text-anchor="middle" font-family="system-ui, monospace" font-size="12" font-weight="700" fill="#0284c7">0x00F8 ➔</text>
+    </g>
+  </g>
+
+  <!-- Connecting Arrow Downwards to Undo Log 2 -->
+  <path d="M 727 180 L 727 215 L 690 215" stroke="#0284c7" stroke-width="2" fill="none" marker-end="url(#ptrArrow)"/>
+  <text x="735" y="202" font-family="system-ui, sans-serif" font-size="11" fill="#0284c7" font-weight="600">回滚指针指向上一个版本</text>
+
+  <!-- Section 2: Undo Log Node 2 -->
+  <g transform="translate(110, 205)" filter="url(#shadow2)">
+    <rect width="570" height="75" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.2"/>
+    <rect x="0" y="0" width="570" height="24" rx="8" fill="#eff6ff"/>
+    <text x="15" y="16" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#1d4ed8">Undo Log 历史记录 (版本 2)</text>
+    <text x="555" y="16" text-anchor="end" font-family="system-ui, monospace" font-size="10" fill="#64748b">Pointer: 0x00F8</text>
+
+    <!-- Node Content -->
+    <g transform="translate(15, 32)">
+      <rect x="0" y="0" width="130" height="34" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="65" y="22" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#334155">name="李四", 200</text>
+
+      <rect x="145" y="0" width="175" height="34" rx="4" fill="#fee2e2" stroke="#fca5a5"/>
+      <text x="232" y="22" text-anchor="middle" font-family="system-ui, monospace" font-size="12" font-weight="700" fill="#991b1b">DB_TRX_ID = 20</text>
+
+      <rect x="335" y="0" width="205" height="34" rx="4" fill="#e0f2fe" stroke="#7dd3fc"/>
+      <text x="437" y="22" text-anchor="middle" font-family="system-ui, monospace" font-size="12" font-weight="700" fill="#0284c7">DB_ROLL_PTR: 0x007A ➔</text>
+    </g>
+  </g>
+
+  <!-- Connecting Arrow Downwards to Undo Log 1 -->
+  <path d="M 547 280 L 547 315 L 510 315" stroke="#0284c7" stroke-width="2" fill="none" marker-end="url(#ptrArrow)"/>
+
+  <!-- Section 3: Undo Log Node 1 -->
+  <g transform="translate(150, 305)" filter="url(#shadow2)">
+    <rect width="530" height="75" rx="8" fill="#ffffff" stroke="#93c5fd" stroke-width="1.2"/>
+    <rect x="0" y="0" width="530" height="24" rx="8" fill="#eff6ff"/>
+    <text x="15" y="16" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#1d4ed8">Undo Log 历史记录 (版本 1 - 最初 INSERT 状态)</text>
+    <text x="515" y="16" text-anchor="end" font-family="system-ui, monospace" font-size="10" fill="#64748b">Pointer: 0x007A</text>
+
+    <!-- Node Content -->
+    <g transform="translate(15, 32)">
+      <rect x="0" y="0" width="130" height="34" rx="4" fill="#f8fafc" stroke="#cbd5e1"/>
+      <text x="65" y="22" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" fill="#334155">name="张三", 100</text>
+
+      <rect x="145" y="0" width="175" height="34" rx="4" fill="#fee2e2" stroke="#fca5a5"/>
+      <text x="232" y="22" text-anchor="middle" font-family="system-ui, monospace" font-size="12" font-weight="700" fill="#991b1b">DB_TRX_ID = 10</text>
+
+      <rect x="335" y="0" width="165" height="34" rx="4" fill="#f1f5f9" stroke="#cbd5e1"/>
+      <text x="417" y="22" text-anchor="middle" font-family="system-ui, monospace" font-size="12" font-weight="700" fill="#64748b">DB_ROLL_PTR: NULL</text>
+    </g>
+  </g>
+
+  <!-- Left Side Summary Box: How MVCC navigates -->
+  <g transform="translate(40, 400)">
+    <rect width="800" height="80" rx="8" fill="#f0fdf4" stroke="#86efac" stroke-width="1.2"/>
+    <text x="20" y="26" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#166534">💡 读事务如何利用版本链：</text>
+    <text x="20" y="48" font-family="system-ui, sans-serif" font-size="12" fill="#15803d">1. 读取事务首先查看聚簇索引中的最新记录 (DB_TRX_ID = 30)。若根据 ReadView 判定该版本不可见；</text>
+    <text x="20" y="66" font-family="system-ui, sans-serif" font-size="12" fill="#15803d">2. 沿着 DB_ROLL_PTR 顺藤摸瓜回溯 Undo Log，依次比对 TRX_ID=20、TRX_ID=10，直到找到第一个对自己可见的版本并返回！</text>
+  </g>
+</svg>

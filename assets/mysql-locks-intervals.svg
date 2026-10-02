@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 520" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad5" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f8fafc" />
+      <stop offset="100%" stop-color="#f1f5f9" />
+    </linearGradient>
+    <filter id="shadow5" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="3" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="920" height="520" rx="16" fill="url(#bgGrad5)" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="460" y="38" text-anchor="middle" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" fill="#0f172a">MySQL InnoDB 行级锁分类与锁定区间模型</text>
+  <text x="460" y="63" text-anchor="middle" font-family="system-ui, sans-serif" font-size="13" fill="#64748b">Record Lock (记录锁)、Gap Lock (间隙锁) 与 Next-Key Lock (临键锁) 的区间与边界图解</text>
+
+  <!-- Main Axis Container -->
+  <g transform="translate(40, 85)" filter="url(#shadow5)">
+    <rect width="840" height="245" rx="12" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <text x="25" y="28" font-family="system-ui, sans-serif" font-size="13" font-weight="700" fill="#334155">📍 索引记录数据轴示例（表中已有记录：id = 3, 10, 20）</text>
+
+    <!-- Indexed Points on Axis -->
+    <!-- The main line -->
+    <line x1="50" y1="85" x2="790" y2="85" stroke="#94a3b8" stroke-width="3"/>
+
+    <!-- Point 3 -->
+    <circle cx="160" cy="85" r="9" fill="#0284c7" stroke="#ffffff" stroke-width="2"/>
+    <rect x="135" y="50" width="50" height="22" rx="4" fill="#0284c7"/>
+    <text x="160" y="65" text-anchor="middle" font-family="system-ui, monospace" font-size="12" font-weight="700" fill="#ffffff">id = 3</text>
+
+    <!-- Point 10 -->
+    <circle cx="380" cy="85" r="9" fill="#0284c7" stroke="#ffffff" stroke-width="2"/>
+    <rect x="350" y="50" width="60" height="22" rx="4" fill="#0284c7"/>
+    <text x="380" y="65" text-anchor="middle" font-family="system-ui, monospace" font-size="12" font-weight="700" fill="#ffffff">id = 10</text>
+
+    <!-- Point 20 -->
+    <circle cx="600" cy="85" r="9" fill="#0284c7" stroke="#ffffff" stroke-width="2"/>
+    <rect x="570" y="50" width="60" height="22" rx="4" fill="#0284c7"/>
+    <text x="600" y="65" text-anchor="middle" font-family="system-ui, monospace" font-size="12" font-weight="700" fill="#ffffff">id = 20</text>
+
+    <!-- Point +infinity -->
+    <rect x="730" y="50" width="60" height="22" rx="4" fill="#64748b"/>
+    <text x="760" y="65" text-anchor="middle" font-family="system-ui, monospace" font-size="12" font-weight="700" fill="#ffffff">+supremum</text>
+
+    <!-- 1. Record Lock Indicator -->
+    <g transform="translate(330, 115)">
+      <rect x="0" y="0" width="100" height="34" rx="6" fill="#fee2e2" stroke="#ef4444" stroke-width="1.5"/>
+      <text x="50" y="16" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#b91c1c">记录锁 [10]</text>
+      <text x="50" y="28" text-anchor="middle" font-family="system-ui, monospace" font-size="9.5" fill="#991b1b">Record Lock (单点)</text>
+      <line x1="50" y1="0" x2="50" y2="-20" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="2,2"/>
+    </g>
+
+    <!-- 2. Gap Lock Indicator -->
+    <g transform="translate(170, 160)">
+      <rect x="0" y="0" width="200" height="34" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="1.5"/>
+      <text x="100" y="16" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#b45309">间隙锁 (3, 10)</text>
+      <text x="100" y="28" text-anchor="middle" font-family="system-ui, monospace" font-size="9.5" fill="#78350f">Gap Lock (开区间，不含两端)</text>
+      <path d="M 0 0 L 0 -65" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,3"/>
+      <path d="M 200 0 L 200 -65" stroke="#f59e0b" stroke-width="1" stroke-dasharray="3,3"/>
+    </g>
+
+    <!-- 3. Next-Key Lock Indicator -->
+    <g transform="translate(390, 160)">
+      <rect x="0" y="0" width="220" height="34" rx="6" fill="#dcfce7" stroke="#10b981" stroke-width="2"/>
+      <text x="110" y="16" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#15803d">临键锁 (10, 20]</text>
+      <text x="110" y="28" text-anchor="middle" font-family="system-ui, monospace" font-size="9.5" fill="#166534">Next-Key Lock (左开右闭区间)</text>
+      <path d="M 0 0 L 0 -65" stroke="#10b981" stroke-width="1" stroke-dasharray="3,3"/>
+      <path d="M 215 0 L 215 -65" stroke="#10b981" stroke-width="2"/>
+    </g>
+
+    <!-- Summary explanation below axis -->
+    <text x="25" y="222" font-family="system-ui, sans-serif" font-size="11.5" fill="#475569">📌 <tspan font-weight="700">InnoDB 默认加锁单位为 Next-Key Lock</tspan>；当使用唯一索引进行等值查询命中精准记录时，会退化为 <tspan font-weight="700" fill="#b91c1c">记录锁</tspan>；若记录不存在则退化为 <tspan font-weight="700" fill="#b45309">间隙锁</tspan>。</text>
+  </g>
+
+  <!-- Bottom 2 Explanatory Cards -->
+  <g transform="translate(40, 345)" filter="url(#shadow5)">
+    <!-- Left Card: S & X Lock Compatibility Matrix -->
+    <rect width="405" height="150" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+    <text x="20" y="24" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#334155">📊 共享锁 (S) 与排他锁 (X) 兼容互斥矩阵</text>
+    
+    <g transform="translate(20, 36)">
+      <!-- Table Header -->
+      <rect x="0" y="0" width="80" height="26" fill="#f1f5f9"/>
+      <rect x="85" y="0" width="135" height="26" fill="#f1f5f9"/>
+      <text x="152" y="17" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#475569">S 锁 (共享/读锁)</text>
+      <rect x="225" y="0" width="135" height="26" fill="#f1f5f9"/>
+      <text x="292" y="17" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#475569">X 锁 (排他/写锁)</text>
+
+      <!-- Row 1: S Lock -->
+      <rect x="0" y="30" width="80" height="28" fill="#f8fafc"/>
+      <text x="40" y="48" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#0284c7">S 锁</text>
+      <rect x="85" y="30" width="135" height="28" fill="#dcfce7"/>
+      <text x="152" y="48" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#15803d">✅ 兼容 (允许并发读)</text>
+      <rect x="225" y="30" width="135" height="28" fill="#fee2e2"/>
+      <text x="292" y="48" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#b91c1c">❌ 互斥 (排队阻塞)</text>
+
+      <!-- Row 2: X Lock -->
+      <rect x="0" y="62" width="80" height="28" fill="#f8fafc"/>
+      <text x="40" y="80" text-anchor="middle" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#b91c1c">X 锁</text>
+      <rect x="85" y="62" width="135" height="28" fill="#fee2e2"/>
+      <text x="152" y="80" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#b91c1c">❌ 互斥 (排队阻塞)</text>
+      <rect x="225" y="62" width="135" height="28" fill="#fee2e2"/>
+      <text x="292" y="80" text-anchor="middle" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#b91c1c">❌ 互斥 (排队阻塞)</text>
+    </g>
+  </g>
+
+  <g transform="translate(465, 345)" filter="url(#shadow5)">
+    <!-- Right Card: Intention Lock Role -->
+    <rect width="415" height="150" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2"/>
+    <text x="20" y="24" font-family="system-ui, sans-serif" font-size="12" font-weight="700" fill="#334155">🛡️ 意向锁（IS / IX）的核心使命：避免全表扫描检测</text>
+    
+    <text x="20" y="52" font-family="system-ui, sans-serif" font-size="11.5" fill="#475569">💡 <tspan font-weight="700" fill="#0f172a">解决什么问题？</tspan></text>
+    <text x="20" y="70" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">若没有意向锁，事务试图申请表锁时，必须一行行遍历整张表</text>
+    <text x="20" y="86" font-family="system-ui, sans-serif" font-size="11" fill="#64748b">确认是否有任何一行被加了行锁，性能开销极大！</text>
+
+    <rect x="20" y="98" width="375" height="38" rx="6" fill="#f0fdf4" stroke="#86efac"/>
+    <text x="30" y="114" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#166534">意向锁妙用：快速路标</text>
+    <text x="30" y="128" font-family="system-ui, sans-serif" font-size="10.5" fill="#15803d">加行锁前先在表级打上 IS/IX 标记，表级加锁时只需看一眼标记即知是否冲突！</text>
+  </g>
+</svg>
