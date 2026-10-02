@@ -4583,19 +4583,35 @@ h1.page-title + .tag-cloud-list {
 }
 .post-reward .reward-button {
   display: inline-block;
-  padding: 0.2rem 1.2rem;
-  background: var(--btn-bg);
-  color: var(--btn-color);
-  -webkit-transition: all 0.4s;
-  -moz-transition: all 0.4s;
-  -o-transition: all 0.4s;
-  -ms-transition: all 0.4s;
-  transition: all 0.4s;
-  border-radius: 30px;
+  padding: 0.35rem 1.6rem;
+  background: -webkit-linear-gradient(315deg, #ff7242 0%, #ff5722 100%) !important;
+  background: -moz-linear-gradient(315deg, #ff7242 0%, #ff5722 100%) !important;
+  background: -o-linear-gradient(315deg, #ff7242 0%, #ff5722 100%) !important;
+  background: -ms-linear-gradient(315deg, #ff7242 0%, #ff5722 100%) !important;
+  background: linear-gradient(135deg, #ff7242 0%, #ff5722 100%) !important;
+  color: #fff !important;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+  border-radius: 30px !important;
+  -webkit-box-shadow: 0 4px 14px rgba(255,114,66,0.4) !important;
+  box-shadow: 0 4px 14px rgba(255,114,66,0.4) !important;
 }
 .post-reward .reward-button:hover {
-  -webkit-box-shadow: inset 20em 0 0 0 var(--btn-hover-color);
-  box-shadow: inset 20em 0 0 0 var(--btn-hover-color);
+  background: -webkit-linear-gradient(315deg, #ff5722 0%, #e64a19 100%) !important;
+  background: -moz-linear-gradient(315deg, #ff5722 0%, #e64a19 100%) !important;
+  background: -o-linear-gradient(315deg, #ff5722 0%, #e64a19 100%) !important;
+  background: -ms-linear-gradient(315deg, #ff5722 0%, #e64a19 100%) !important;
+  background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%) !important;
+  -webkit-box-shadow: 0 6px 18px rgba(255,87,34,0.55) !important;
+  box-shadow: 0 6px 18px rgba(255,87,34,0.55) !important;
+  -webkit-transform: translateY(-2px);
+  -moz-transform: translateY(-2px);
+  -o-transform: translateY(-2px);
+  -ms-transform: translateY(-2px);
+  transform: translateY(-2px);
 }
 .post-reward .reward-button:hover .reward-main {
   display: -webkit-box;
@@ -6378,6 +6394,7 @@ blockquote.pullquote.right {
 }
 /* root伪类指定全局颜色 */
 :root {
+  --theme-color: #49b1f5;
   --blue-custom: #5ea6e5;
   --loading-color: rgba(207, 246, 247, 0.92);
   --border-color: #c9c9c9;
@@ -6393,7 +6410,7 @@ blockquote.pullquote.right {
   --color-black: rgb(0, 0, 0);
   --color-darkblue: rgb(97, 100, 159);
   --color-heoblue: rgb(66, 90, 239);
-  --btn-bg: var(--theme-color) !important;
+  --btn-bg: var(--theme-color, #49b1f5) !important;
   --scrollbar-color: var(--theme-color) !important;
   --border-style: 1px solid rgba(169, 169, 169, 0.7);
   /* 代码框行数背景色 */
@@ -9473,6 +9490,40 @@ hr:before {
   scale: 1.05;
   transition: all 0.3s ease-in-out;
 }
+
+/* 投喂作者按钮白天/黑夜模式显示优化 */
+.post-reward {
+  margin: 3.5rem 0 2rem 0 !important;
+  text-align: center !important;
+  position: relative !important;
+}
+
+.post-reward .reward-button,
+.post-reward .tip-button {
+  background: linear-gradient(135deg, #ff7242 0%, #ff5722 100%) !important;
+  color: #ffffff !important;
+  border-radius: 30px !important;
+  box-shadow: 0 4px 14px rgba(255, 114, 66, 0.4) !important;
+  padding: 0.35rem 1.6rem !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.post-reward .reward-button:hover,
+.post-reward .tip-button:hover {
+  background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%) !important;
+  box-shadow: 0 6px 18px rgba(255, 87, 34, 0.55) !important;
+  transform: translateY(-2px) !important;
+}
+
+.post-reward .tip-button__text {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+}
+
 
 .search-dialog {
   position: fixed;

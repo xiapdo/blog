@@ -1,21 +1,28 @@
 .tip-button {
+  background: linear-gradient(135deg, #ff7242 0%, #ff5722 100%);
   border: 0;
-  border-radius: 0.25rem;
+  border-radius: 30px;
+  box-shadow: 0 4px 14px rgba(255, 114, 66, 0.4);
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
-  height: 2.6rem;
+  height: 2.8rem;
+  padding: 0 1.6rem;
   margin-bottom: -4rem;
   outline: 0;
   position: relative;
   top: 0;
   transform-origin: 0% 100%;
-  transition: transform 50ms ease-in-out;
+  transition: transform 150ms ease-in-out, box-shadow 250ms ease, background 250ms ease;
   width: auto;
   -webkit-tap-highlight-color: transparent;
 }
+.tip-button:hover {
+  background: linear-gradient(135deg, #ff5722 0%, #e64a19 100%);
+  box-shadow: 0 6px 18px rgba(255, 87, 34, 0.55);
+}
 .tip-button:active {
-  transform: rotate(4deg);
+  transform: rotate(2deg) scale(0.98);
 }
 .tip-button.clicked {
   animation: 150ms ease-in-out 1 shake;
@@ -28,7 +35,8 @@
 .tip-button.clicked::before {
   height: 0.5rem;
   width: 60%;
-  background: var(button-hover-color);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
 }
 .tip-button.clicked .coin {
   transition: margin-bottom 1s linear 200ms;
@@ -58,9 +66,10 @@
   position: relative;
   transition: opacity 100ms linear 500ms;
   z-index: 3;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 }
 .tip-button::before {
-  border-radius: 0.25rem;
+  border-radius: 30px;
   bottom: 0;
   content: '';
   display: block;
@@ -71,6 +80,7 @@
   transition: height 250ms ease-in-out 400ms, width 250ms ease-in-out 300ms;
   width: 100%;
   z-index: 2;
+  pointer-events: none;
 }
 .tip-button::after {
   bottom: -1rem;
